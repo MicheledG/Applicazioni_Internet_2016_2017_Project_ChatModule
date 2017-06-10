@@ -9,7 +9,6 @@
 	<packaging>jar</packaging>
 
 	<name>chat-module</name>
-	<description>Demo project for Spring Boot</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -47,4 +46,6 @@
 	</build>
 
 
+	<description>chat-module handle the RESTful API and WebSockets about:
+- chato for the transport web site;</description>
 </project>
