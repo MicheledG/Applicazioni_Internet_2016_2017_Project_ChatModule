@@ -10,7 +10,6 @@ import it.polito.ai.chatmodule.ChatMessages.Repositories.BusMetroMessageReposito
 import it.polito.ai.chatmodule.ChatMessages.Repositories.TrafficMessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +22,6 @@ import java.util.List;
  */
 @RestController
 public class MessageController {
-
     private static final String topic1 = "BusMetro";
     private static final String topic2 = "Traffic";
     private static final String topic3 = "BikeTrip";
@@ -43,15 +41,15 @@ public class MessageController {
 
         switch (topic) {
             case topic1:
-                List<BusMetroMessage> msgs1 = busMetroMessageRepository.findTopByOrderByCreatedDesc();
+                List<BusMetroMessage> msgs1 = busMetroMessageRepository.findBusMetroMessages(new PageRequest(0, count));
                 return mapper.writeValueAsString(msgs1);
 
             case topic2:
-                List<TrafficMessage> msgs2 = trafficMessageRepository.findTopByOrderByCreatedDesc();
+                List<TrafficMessage> msgs2 = trafficMessageRepository.findTrafficMessages(new PageRequest(0, count));
                 return mapper.writeValueAsString(msgs2);
 
             case topic3:
-                List<BikeTripMessage> msgs3 = bikeTripMessageRepository.findTopByOrderByCreatedDesc();
+                List<BikeTripMessage> msgs3 = bikeTripMessageRepository.findBikeTripMessages(new PageRequest(0, count));
                 return mapper.writeValueAsString(msgs3);
 
             default:
