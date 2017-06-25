@@ -11,6 +11,7 @@ import it.polito.ai.chatmodule.ChatMessages.Repositories.TrafficMessageRepositor
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,7 +34,7 @@ public class MessageController {
     @Autowired
     private TrafficMessageRepository trafficMessageRepository;
 
-    @RequestMapping("/messages")
+    @RequestMapping(value = "/messages", method = RequestMethod.GET)
     public String getMessages(@RequestParam(value = "topic") String topic,
                               @RequestParam(value = "count", defaultValue = "10", required = false) Integer count) throws JsonProcessingException {
 
@@ -53,36 +54,34 @@ public class MessageController {
                 return mapper.writeValueAsString(msgs3);
 
             default:
-                break;
+                return "Cannot retrieve messages about this topic: " + topic;
         }
-
-        return "Error";
     }
 
-    @RequestMapping("/createMessages")
-    public void createMessages(@RequestParam(value = "topic") String topic,
-                               @RequestParam(value = "count", defaultValue = "10", required = false) Integer count) throws JsonProcessingException {
+    @RequestMapping(value = "/messages", method = RequestMethod.POST)
+    public String createMessages(@RequestParam(value = "topic") String topic,
+                                 @RequestParam(value = "count", defaultValue = "10", required = false) Integer count) throws JsonProcessingException {
         switch (topic) {
             case topic1:
                 for (int i = 0; i < count; i++) {
                     busMetroMessageRepository.save(new BusMetroMessage(new Date(), "mail1@test.com", "Bus&Metro " + i));
                 }
-                break;
+                return "Created " + count + " messages about topic: " + topic1;
 
             case topic2:
                 for (int i = 0; i < count; i++) {
                     trafficMessageRepository.save(new TrafficMessage(new Date(), "mail1@test.com", "Bus&Traffic " + i));
                 }
-                break;
+                return "Created " + count + " messages about topic: " + topic2;
 
             case topic3:
                 for (int i = 0; i < count; i++) {
                     bikeTripMessageRepository.save(new BikeTripMessage(new Date(), "mail1@test.com", "BikeTrip " + i));
                 }
-                break;
+                return "Created " + count + " messages about topic: " + topic3;
 
             default:
-                break;
+                return "Cannot create messages about this topic: " + topic;
         }
     }
 }
