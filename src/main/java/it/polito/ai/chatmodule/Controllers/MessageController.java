@@ -9,23 +9,24 @@ import it.polito.ai.chatmodule.ChatMessages.Repositories.BikeTripMessageReposito
 import it.polito.ai.chatmodule.ChatMessages.Repositories.BusMetroMessageRepository;
 import it.polito.ai.chatmodule.ChatMessages.Repositories.TrafficMessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by france193 on 24/06/2017.
  */
 @RestController
 public class MessageController {
-    private static final String topic1 = "BusMetro";
-    private static final String topic2 = "Traffic";
-    private static final String topic3 = "BikeTrip";
+    private static final String BUS_METRO = "BusMetro";
+    private static final String TRAFFIC = "Traffic";
+    private static final String BIKE_TRIP = "BikeTrip";
 
     @Autowired
     private BusMetroMessageRepository busMetroMessageRepository;
@@ -40,18 +41,22 @@ public class MessageController {
 
         ObjectMapper mapper = new ObjectMapper();
 
+        PageRequest pageRequest = new PageRequest(0,
+                count,
+                new Sort(new Sort.Order(Sort.Direction.DESC, "timestamp")));
+
         switch (topic) {
-            case topic1:
-                List<BusMetroMessage> msgs1 = busMetroMessageRepository.findBusMetroMessages(new PageRequest(0, count));
-                return mapper.writeValueAsString(msgs1);
+            case BUS_METRO:
+                Page<BusMetroMessage> msgs1 = busMetroMessageRepository.findAll(pageRequest);
+                return mapper.writeValueAsString(msgs1.getContent());
 
-            case topic2:
-                List<TrafficMessage> msgs2 = trafficMessageRepository.findTrafficMessages(new PageRequest(0, count));
-                return mapper.writeValueAsString(msgs2);
+            case TRAFFIC:
+                Page<TrafficMessage> msgs2 = trafficMessageRepository.findAll(pageRequest);
+                return mapper.writeValueAsString(msgs2.getContent());
 
-            case topic3:
-                List<BikeTripMessage> msgs3 = bikeTripMessageRepository.findBikeTripMessages(new PageRequest(0, count));
-                return mapper.writeValueAsString(msgs3);
+            case BIKE_TRIP:
+                Page<BikeTripMessage> msgs3 = bikeTripMessageRepository.findAll(pageRequest);
+                return mapper.writeValueAsString(msgs3.getContent());
 
             default:
                 return "Cannot retrieve messages about this topic: " + topic;
@@ -62,23 +67,23 @@ public class MessageController {
     public String createMessages(@RequestParam(value = "topic") String topic,
                                  @RequestParam(value = "count", defaultValue = "10", required = false) Integer count) throws JsonProcessingException {
         switch (topic) {
-            case topic1:
+            case BUS_METRO:
                 for (int i = 0; i < count; i++) {
                     busMetroMessageRepository.save(new BusMetroMessage(new Date(), "mail1@test.com", "Bus&Metro " + i));
                 }
-                return "Created " + count + " messages about topic: " + topic1;
+                return "Created " + count + " messages about topic: " + BUS_METRO;
 
-            case topic2:
+            case TRAFFIC:
                 for (int i = 0; i < count; i++) {
                     trafficMessageRepository.save(new TrafficMessage(new Date(), "mail1@test.com", "Bus&Traffic " + i));
                 }
-                return "Created " + count + " messages about topic: " + topic2;
+                return "Created " + count + " messages about topic: " + TRAFFIC;
 
-            case topic3:
+            case BIKE_TRIP:
                 for (int i = 0; i < count; i++) {
                     bikeTripMessageRepository.save(new BikeTripMessage(new Date(), "mail1@test.com", "BikeTrip " + i));
                 }
-                return "Created " + count + " messages about topic: " + topic3;
+                return "Created " + count + " messages about topic: " + BIKE_TRIP;
 
             default:
                 return "Cannot create messages about this topic: " + topic;
