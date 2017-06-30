@@ -24,4 +24,4 @@ nbdist/
 .nb-gradle/
 
 # here there is the file with the mongo config (mongo.url, mongo.port, mongo.db)
-src/main/resources/mongo.properties
+# src/main/resources/mongo.properties
