@@ -1,12 +1,13 @@
-package it.polito.ai.chatmodule.WebSocketTest;
+package it.polito.ai.chatmodule.WebSocketServerTest;
+
+/**
+ * Created by france193 on 30/06/2017.
+ */
 
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 
-/**
- * Created by france193 on 26/06/2017.
- */
 @Controller
 public class GreetingController {
 

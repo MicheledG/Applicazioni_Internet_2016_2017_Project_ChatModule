@@ -1,4 +1,4 @@
-package it.polito.ai.chatmodule.WebSocketTest;
+package it.polito.ai.chatmodule.WebSocketServerTest;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
@@ -9,6 +9,7 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 /**
  * Created by france193 on 26/06/2017.
  */
+
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
@@ -21,7 +22,7 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/gs-guide-websocket").withSockJS();
+        registry.addEndpoint("/gs-guide-websocket").setAllowedOrigins("*").withSockJS();
     }
 
 }

@@ -1,7 +1,7 @@
-package it.polito.ai.chatmodule.WebSocketTest;
+package it.polito.ai.chatmodule.WebSocketServerTest;
 
 /**
- * Created by france193 on 26/06/2017.
+ * Created by france193 on 30/06/2017.
  */
 public class Greeting {
 
