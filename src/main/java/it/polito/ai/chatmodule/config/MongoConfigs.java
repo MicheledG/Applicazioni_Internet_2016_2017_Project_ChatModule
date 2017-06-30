@@ -1,4 +1,4 @@
-package it.polito.ai.chatmodule;
+package it.polito.ai.chatmodule.config;
 
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;

@@ -1,7 +1,8 @@
-package it.polito.ai.chatmodule.ChatMessages.Repositories;
+package it.polito.ai.chatmodule.repositories.messages;
 
-import it.polito.ai.chatmodule.ChatMessages.Model.BikeTripMessage;
 import org.springframework.data.mongodb.repository.MongoRepository;
+
+import it.polito.ai.chatmodule.model.messages.BikeTripMessage;
 
 /**
  * Created by france193 on 24/06/2017.

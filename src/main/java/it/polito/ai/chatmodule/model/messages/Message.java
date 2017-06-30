@@ -1,4 +1,4 @@
-package it.polito.ai.chatmodule.ChatMessages.Model;
+package it.polito.ai.chatmodule.model.messages;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.Id;

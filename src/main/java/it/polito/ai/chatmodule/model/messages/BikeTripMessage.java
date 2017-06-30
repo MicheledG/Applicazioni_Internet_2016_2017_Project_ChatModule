@@ -1,4 +1,4 @@
-package it.polito.ai.chatmodule.ChatMessages.Model;
+package it.polito.ai.chatmodule.model.messages;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -7,15 +7,15 @@ import java.util.Date;
 /**
  * Created by france193 on 24/06/2017.
  */
-@Document(collection = "BusMetroMessage")
-public class BusMetroMessage extends Message {
-    public BusMetroMessage(Date timestamp, String userMail, String message) {
+@Document(collection = "BikeTripMessage")
+public class BikeTripMessage extends Message {
+    public BikeTripMessage(Date timestamp, String userMail, String message) {
         super(timestamp, userMail, message);
     }
 
     @Override
     public String toString() {
-        return "BusMetroMessage{" +
+        return "BikeTripMessage{" +
                 "id='" + id + '\'' +
                 ", timestamp=" + timestamp +
                 ", userMail='" + userMail + '\'' +

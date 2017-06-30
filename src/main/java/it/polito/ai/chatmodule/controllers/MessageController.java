@@ -1,13 +1,15 @@
-package it.polito.ai.chatmodule.Controllers;
+package it.polito.ai.chatmodule.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import it.polito.ai.chatmodule.ChatMessages.Model.BikeTripMessage;
-import it.polito.ai.chatmodule.ChatMessages.Model.BusMetroMessage;
-import it.polito.ai.chatmodule.ChatMessages.Model.TrafficMessage;
-import it.polito.ai.chatmodule.ChatMessages.Repositories.BikeTripMessageRepository;
-import it.polito.ai.chatmodule.ChatMessages.Repositories.BusMetroMessageRepository;
-import it.polito.ai.chatmodule.ChatMessages.Repositories.TrafficMessageRepository;
+
+import it.polito.ai.chatmodule.model.messages.BikeTripMessage;
+import it.polito.ai.chatmodule.model.messages.BusMetroMessage;
+import it.polito.ai.chatmodule.model.messages.TrafficMessage;
+import it.polito.ai.chatmodule.repositories.messages.BikeTripMessageRepository;
+import it.polito.ai.chatmodule.repositories.messages.BusMetroMessageRepository;
+import it.polito.ai.chatmodule.repositories.messages.TrafficMessageRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
