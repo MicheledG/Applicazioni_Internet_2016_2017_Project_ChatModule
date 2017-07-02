@@ -9,8 +9,8 @@ import java.util.Date;
  */
 @Document(collection = "TrafficMessage")
 public class TrafficMessage extends Message {
-    public TrafficMessage(Date timestamp, String userMail, String message) {
-        super(timestamp, userMail, message);
+    public TrafficMessage(Date timestamp, String userMail, String content) {
+        super(timestamp, userMail, content);
     }
 
     @Override
@@ -19,7 +19,7 @@ public class TrafficMessage extends Message {
                 "id='" + id + '\'' +
                 ", timestamp=" + timestamp +
                 ", userMail='" + userMail + '\'' +
-                ", message='" + message + '\'' +
+                ", message='" + content + '\'' +
                 '}';
     }
 }

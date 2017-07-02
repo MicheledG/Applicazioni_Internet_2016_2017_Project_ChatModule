@@ -16,15 +16,15 @@ public class Message {
     @Indexed
     protected Date timestamp;
     protected String userMail;
-    protected String message;
+    protected String content;
 
     public Message() {
     }
 
-    public Message(Date timestamp, String userMail, String message) {
+    public Message(Date timestamp, String userMail, String content) {
         this.timestamp = timestamp;
         this.userMail = userMail;
-        this.message = message;
+        this.content = content;
     }
 
     public String getId() {
@@ -47,12 +47,12 @@ public class Message {
         this.userMail = userMail;
     }
 
-    public String getMessage() {
-        return message;
+    public String getContent() {
+        return content;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     @Override
@@ -61,7 +61,7 @@ public class Message {
                 "id='" + id + '\'' +
                 ", timestamp=" + timestamp +
                 ", userMail='" + userMail + '\'' +
-                ", message='" + message + '\'' +
+                ", content='" + content + '\'' +
                 '}';
     }
 }

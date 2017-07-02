@@ -9,8 +9,8 @@ import java.util.Date;
  */
 @Document(collection = "BusMetroMessage")
 public class BusMetroMessage extends Message {
-    public BusMetroMessage(Date timestamp, String userMail, String message) {
-        super(timestamp, userMail, message);
+    public BusMetroMessage(Date timestamp, String userMail, String content) {
+        super(timestamp, userMail, content);
     }
 
     @Override
@@ -19,7 +19,7 @@ public class BusMetroMessage extends Message {
                 "id='" + id + '\'' +
                 ", timestamp=" + timestamp +
                 ", userMail='" + userMail + '\'' +
-                ", message='" + message + '\'' +
+                ", message='" + content + '\'' +
                 '}';
     }
 }
