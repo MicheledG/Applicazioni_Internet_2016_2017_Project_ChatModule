@@ -19,6 +19,11 @@ public class GlobalExceptionHandler {
     public void failedToAuthenticate() {
     }
     
+    @ResponseStatus(UNAUTHORIZED)
+    @ExceptionHandler(FailedToResolveUsernameException.class)
+    public void failedToResolveNickname() {
+    }
+    
     @ResponseStatus(FORBIDDEN)
     @ExceptionHandler(SignatureException.class)
     public void failedToVerify() {

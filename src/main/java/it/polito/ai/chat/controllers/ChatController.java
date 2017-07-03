@@ -9,6 +9,8 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
 
+import it.polito.ai.chat.exception.FailedToAuthenticateException;
+import it.polito.ai.chat.exception.FailedToResolveUsernameException;
 import it.polito.ai.chat.model.messages.ForwardedMessage;
 import it.polito.ai.chat.model.messages.ReceivedMessage;
 import it.polito.ai.chat.model.messages.StoredMessage;
@@ -26,7 +28,10 @@ public class ChatController {
 	
 	@MessageMapping("/topic/{topicId}")
 	@SendTo("/topic/{topicId}")
-	public ForwardedMessage messageForwarder(SimpMessageHeaderAccessor headerAccessor, @DestinationVariable String topicId, ReceivedMessage receivedMessage) throws Exception{
+	public ForwardedMessage messageForwarder(
+			SimpMessageHeaderAccessor headerAccessor,
+			@DestinationVariable String topicId,
+			ReceivedMessage receivedMessage) throws FailedToAuthenticateException, FailedToResolveUsernameException{
 		
 		//TODO: check id the topicId is a valid one!
 		
@@ -38,13 +43,13 @@ public class ChatController {
 		if(username == null){
 			//TODO
 			System.err.println("username in websocket session "+headerAccessor.getSessionId()+" not found");
-			throw new Exception();
+			throw new FailedToAuthenticateException("username in websocket session "+headerAccessor.getSessionId()+" not found");
 		}
 		String nickname = profileService.getNickname(username);
 		if(nickname == null){
 			//TODO
 			System.err.println("nickname not resolved for username "+username);
-			throw new Exception();
+			throw new FailedToResolveUsernameException("nickname not resolved for username "+username);
 		}
 		
 		//extract the information from the received message
