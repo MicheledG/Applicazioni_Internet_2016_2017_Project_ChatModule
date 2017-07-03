@@ -2,12 +2,16 @@ package it.polito.ai.chat.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import it.polito.ai.chat.model.messages.*;
+import it.polito.ai.chat.exception.CustomNotFoundException;
+import it.polito.ai.chat.exception.UnknownTopic;
+import it.polito.ai.chat.model.messages.MessageAssembler;
+import it.polito.ai.chat.model.messages.MessageResource;
+import it.polito.ai.chat.model.messages.StoredMessage;
+import it.polito.ai.chat.model.messages.TopicResource;
 import it.polito.ai.chat.repositories.messages.BikeTripMessageRepository;
 import it.polito.ai.chat.repositories.messages.BusMetroMessageRepository;
 import it.polito.ai.chat.repositories.messages.TrafficMessageRepository;
-
+import it.polito.ai.chat.services.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,7 +20,6 @@ import org.springframework.hateoas.Link;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
@@ -38,9 +41,11 @@ public class MessageController {
     private TrafficMessageRepository trafficMessageRepository;
     @Autowired
     MessageAssembler messageAssembler;
+    @Autowired
+    MessageService messageService;
 
     /**
-     * DEBUG PURPOSE, create count message on database
+     * DEBUG PURPOSE, create count message on MongoDB
      *
      * @param topicName
      * @param count
@@ -49,29 +54,8 @@ public class MessageController {
      */
     @RequestMapping(value = "/topics/{topicName}/messages", method = RequestMethod.POST)
     public String setTopicMessages(@PathVariable("topicName") String topicName,
-                                   @RequestParam(value = "count", defaultValue = "10", required = false) Integer count) throws JsonProcessingException {
-        switch (topicName) {
-            case BUS_METRO:
-                for (int i = 0; i < count; i++) {
-                    busMetroMessageRepository.save(new BusMetroMessage(new Date(), "mail1@test.com", "Bus&Metro " + i));
-                }
-                return "Created " + count + " messages about topic: " + BUS_METRO;
-
-            case TRAFFIC:
-                for (int i = 0; i < count; i++) {
-                    trafficMessageRepository.save(new TrafficMessage(new Date(), "mail1@test.com", "Bus&Traffic " + i));
-                }
-                return "Created " + count + " messages about topic: " + TRAFFIC;
-
-            case BIKE_TRIP:
-                for (int i = 0; i < count; i++) {
-                    bikeTripMessageRepository.save(new BikeTripMessage(new Date(), "mail1@test.com", "BikeTrip " + i));
-                }
-                return "Created " + count + " messages about topic: " + BIKE_TRIP;
-
-            default:
-                return "Cannot create messages about this topic: " + topicName;
-        }
+                                   @RequestParam(value = "count", defaultValue = "10", required = false) Integer count) throws JsonProcessingException, UnknownTopic {
+        return messageService.createCountMessages(topicName, count);
     }
 
     /**
@@ -116,19 +100,7 @@ public class MessageController {
                 count,
                 new Sort(new Sort.Order(Sort.Direction.DESC, "timestamp")));
 
-        switch (topicName) {
-            case BUS_METRO:
-                return mapper.writeValueAsString(busMetroMessageRepository.findAll(pageRequest).getContent());
-
-            case TRAFFIC:
-                return mapper.writeValueAsString(trafficMessageRepository.findAll(pageRequest).getContent());
-
-            case BIKE_TRIP:
-                return mapper.writeValueAsString(bikeTripMessageRepository.findAll(pageRequest).getContent());
-
-            default:
-                return new CustomNotFoundException("Topic " + topicName + " doesn't exist").getMessage();
-        }
+        return mapper.writeValueAsString(messageService.getTopicMessages(topicName, pageRequest));
     }
 
 

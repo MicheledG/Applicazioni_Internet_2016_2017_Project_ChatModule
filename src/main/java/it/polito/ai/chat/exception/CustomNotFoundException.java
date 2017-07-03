@@ -1,4 +1,4 @@
-package it.polito.ai.chat.controllers;
+package it.polito.ai.chat.exception;
 
 public class CustomNotFoundException extends RuntimeException {
 
