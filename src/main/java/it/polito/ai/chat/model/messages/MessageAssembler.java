@@ -6,14 +6,14 @@ import org.springframework.stereotype.Component;
 import it.polito.ai.chat.controllers.MessageController;
 
 @Component
-public class MessageAssembler extends ResourceAssemblerSupport<Message, MessageResource> {
+public class MessageAssembler extends ResourceAssemblerSupport<StoredMessage, MessageResource> {
 
     public MessageAssembler() {
         super(MessageController.class, MessageResource.class);
     }
 
     @Override
-    public MessageResource toResource(Message message) {
+    public MessageResource toResource(StoredMessage message) {
         if (message == null) {
             return null;
         }

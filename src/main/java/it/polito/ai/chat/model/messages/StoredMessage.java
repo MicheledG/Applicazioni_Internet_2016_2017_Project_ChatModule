@@ -10,7 +10,7 @@ import java.util.Date;
  * Created by france193 on 25/06/2017.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Message {
+public class StoredMessage {
     @Id
     protected String id;
     @Indexed
@@ -18,10 +18,10 @@ public class Message {
     protected String userMail;
     protected String content;
 
-    public Message() {
+    public StoredMessage() {
     }
 
-    public Message(Date timestamp, String userMail, String content) {
+    public StoredMessage(Date timestamp, String userMail, String content) {
         this.timestamp = timestamp;
         this.userMail = userMail;
         this.content = content;

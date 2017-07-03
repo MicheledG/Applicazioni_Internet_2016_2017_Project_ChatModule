@@ -208,7 +208,7 @@ public class MessageController {
     private List<MessageResource> createResources(Page<?> pages, String topicName) {
         List<MessageResource> topicMessages = new ArrayList<>();
         for (Object message : pages.getContent()) {
-            MessageResource resource = messageAssembler.toResource((Message) message);
+            MessageResource resource = messageAssembler.toResource((StoredMessage) message);
             Link link = linkTo(MessageController.class).slash("topics").slash(topicName).withRel("myTopic");
             Link link2 = linkTo(MessageController.class).slash("topics").withRel("topics");
             resource.add(link);

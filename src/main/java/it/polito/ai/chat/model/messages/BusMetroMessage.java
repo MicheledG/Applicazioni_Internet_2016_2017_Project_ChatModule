@@ -8,7 +8,7 @@ import java.util.Date;
  * Created by france193 on 24/06/2017.
  */
 @Document(collection = "BusMetroMessage")
-public class BusMetroMessage extends Message {
+public class BusMetroMessage extends StoredMessage {
     public BusMetroMessage(Date timestamp, String userMail, String content) {
         super(timestamp, userMail, content);
     }
