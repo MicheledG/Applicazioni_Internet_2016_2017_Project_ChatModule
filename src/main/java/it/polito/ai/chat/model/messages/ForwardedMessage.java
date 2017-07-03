@@ -14,7 +14,7 @@ public class ForwardedMessage implements Comparable<ForwardedMessage> {
     private Date timestamp;
     private String content;
 
-    public String getNickname() {
+	public String getNickname() {
         return nickname;
     }
 

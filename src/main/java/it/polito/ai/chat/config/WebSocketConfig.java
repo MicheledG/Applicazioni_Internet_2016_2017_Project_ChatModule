@@ -77,6 +77,7 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
     				}
     				
     				accessor.setLogin(username);
+    				accessor.getSessionAttributes().put("username", username);
     				
     			}
 

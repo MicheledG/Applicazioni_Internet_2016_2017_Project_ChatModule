@@ -15,15 +15,15 @@ public class StoredMessage {
     protected String id;
     @Indexed
     protected Date timestamp;
-    protected String userMail;
+    protected String username;
     protected String content;
 
     public StoredMessage() {
     }
 
-    public StoredMessage(Date timestamp, String userMail, String content) {
+    public StoredMessage(Date timestamp, String username, String content) {
         this.timestamp = timestamp;
-        this.userMail = userMail;
+        this.username = username;
         this.content = content;
     }
 
@@ -39,12 +39,12 @@ public class StoredMessage {
         this.timestamp = timestamp;
     }
 
-    public String getUserMail() {
-        return userMail;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserMail(String userMail) {
-        this.userMail = userMail;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getContent() {
@@ -60,7 +60,7 @@ public class StoredMessage {
         return "Message{" +
                 "id='" + id + '\'' +
                 ", timestamp=" + timestamp +
-                ", userMail='" + userMail + '\'' +
+                ", username='" + username + '\'' +
                 ", content='" + content + '\'' +
                 '}';
     }

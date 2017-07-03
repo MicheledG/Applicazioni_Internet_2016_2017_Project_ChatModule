@@ -9,8 +9,8 @@ import java.util.Date;
  */
 @Document(collection = "TrafficMessage")
 public class TrafficMessage extends StoredMessage {
-    public TrafficMessage(Date timestamp, String userMail, String content) {
-        super(timestamp, userMail, content);
+    public TrafficMessage(Date timestamp, String username, String content) {
+        super(timestamp, username, content);
     }
 
     @Override
@@ -18,7 +18,7 @@ public class TrafficMessage extends StoredMessage {
         return "TrafficMessage{" +
                 "id='" + id + '\'' +
                 ", timestamp=" + timestamp +
-                ", userMail='" + userMail + '\'' +
+                ", username='" + username + '\'' +
                 ", message='" + content + '\'' +
                 '}';
     }
