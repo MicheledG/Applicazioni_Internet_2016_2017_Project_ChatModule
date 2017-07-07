@@ -3,14 +3,12 @@ package it.polito.ai.chat.controllers;
 import it.polito.ai.chat.Topics;
 import it.polito.ai.chat.exception.FailedToAuthenticateException;
 import it.polito.ai.chat.exception.FailedToResolveUsernameException;
-import it.polito.ai.chat.exception.UnknownTopic;
 import it.polito.ai.chat.model.messages.ForwardedMessage;
 import it.polito.ai.chat.model.messages.ReceivedMessage;
 import it.polito.ai.chat.model.messages.StoredMessage;
 import it.polito.ai.chat.services.MessageService;
 import it.polito.ai.chat.services.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
@@ -18,22 +16,22 @@ import org.springframework.stereotype.Controller;
 
 import java.util.Date;
 
+/**
+ * Created by france193 on 07/07/2017.
+ */
 @Controller
-public class ChatController {
-
+public class BikeTripChatController {
     @Autowired
     private MessageService messageService;
     @Autowired
     private ProfileService profileService;
 
-    @MessageMapping("/chat")
-    @SendTo("/topic/BusMetro")
+    @MessageMapping("/chat_biketrip")
+    @SendTo("/topic/BikeTrip")
     public ForwardedMessage messageForwarder(SimpMessageHeaderAccessor headerAccessor,
                                              ReceivedMessage receivedMessage) throws FailedToAuthenticateException, FailedToResolveUsernameException {
 
-        System.out.println("4 Received: " + receivedMessage.getContent().toString());
-
-        String topicId = "BusMetro";
+        System.out.println("Received: " + Topics.BIKE_TRIP + " - " + receivedMessage.getContent().toString());
 
         //create the timestamp of the message
         Date timestamp = new Date();
@@ -58,7 +56,7 @@ public class ChatController {
         messageToPersist.setUsername(username);
         messageToPersist.setContent(messageContent);
         messageToPersist.setTimestamp(timestamp);
-        messageService.persistMessage(topicId, messageToPersist);
+        messageService.persistMessage(Topics.BIKE_TRIP, messageToPersist);
 
         //create the message to forward
         ForwardedMessage messageToForward = new ForwardedMessage();
@@ -70,5 +68,4 @@ public class ChatController {
         //forward the message
         return messageToForward;
     }
-
 }

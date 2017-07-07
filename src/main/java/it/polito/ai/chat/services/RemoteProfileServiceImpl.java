@@ -6,23 +6,21 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class RemoteProfileServiceImpl implements ProfileService {
 
-    private final static String REMOTE_PROFILE_ENDPOINT = "http://localhost:8083/nickname";
+    private static final String REMOTE_NICKNAME_ENDPOINT = "http://localhost:8083/profile/nickname?username=";
 
     @Override
     public String getNickname(String username) {
 
-        // Send a POST request to the Authentication Module
+        // Define a template to perform rest requests
         RestTemplate restTemplate = new RestTemplate();
-        String nickname;
+
+        // Get from the Profile module the nickname related to the current logged username
+        String nickname = null;
         try {
-            nickname = restTemplate.getForObject(
-                    REMOTE_PROFILE_ENDPOINT + "?username=" + username,
-                    String.class);
+            nickname = restTemplate.getForObject(REMOTE_NICKNAME_ENDPOINT + username, String.class);
         } catch (Exception e) {
-            //TODO: retrieve of the nickname associated to the given username failed
-            System.err.println("retrieve of the nickname associated to the given username failed");
-            System.err.println(e.getMessage());
-            return null;
+            // Something goes wrong with the REST request
+
         }
 
         return nickname;
