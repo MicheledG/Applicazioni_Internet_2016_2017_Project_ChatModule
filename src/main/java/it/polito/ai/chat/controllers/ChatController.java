@@ -1,7 +1,9 @@
 package it.polito.ai.chat.controllers;
 
+import it.polito.ai.chat.Topics;
 import it.polito.ai.chat.exception.FailedToAuthenticateException;
 import it.polito.ai.chat.exception.FailedToResolveUsernameException;
+import it.polito.ai.chat.exception.UnknownTopic;
 import it.polito.ai.chat.model.messages.ForwardedMessage;
 import it.polito.ai.chat.model.messages.ReceivedMessage;
 import it.polito.ai.chat.model.messages.StoredMessage;
@@ -31,7 +33,16 @@ public class ChatController {
             @DestinationVariable String topicId,
             ReceivedMessage receivedMessage) throws FailedToAuthenticateException, FailedToResolveUsernameException {
 
-        //TODO: check id the topicId is a valid one!
+        switch (topicId) {
+            // accept only this 3 topics
+            case Topics.BIKE_TRIP:
+            case Topics.BUS_METRO:
+            case Topics.TRAFFIC:
+                break;
+
+            default:
+                throw new UnknownTopic("Cannot create messages about this topic: " + topicId);
+        }
 
         //create the timestamp of the message
         Date timestamp = new Date();

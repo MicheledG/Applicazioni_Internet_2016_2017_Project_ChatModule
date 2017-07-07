@@ -1,5 +1,8 @@
 package it.polito.ai.chat.config;
 
+import it.polito.ai.chat.security.JWTAuthenticationEntryPoint;
+import it.polito.ai.chat.security.JWTAuthenticationFilter;
+import it.polito.ai.chat.security.JWTAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Configuration;
@@ -13,17 +16,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import it.polito.ai.chat.security.JWTAuthenticationEntryPoint;
-import it.polito.ai.chat.security.JWTAuthenticationFilter;
-import it.polito.ai.chat.security.JWTAuthenticationProvider;
-
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private Boolean SECURITY = true;
+    private Boolean SECURITY = false;
 
     @Autowired
     private JWTAuthenticationEntryPoint jwtAuthenticationEntryPoint;
@@ -59,6 +58,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     // Allow anonymous access for creating a new profile (from AuthModule)
                     // Excepted for CORS preflighted requests
                     .antMatchers(HttpMethod.OPTIONS).permitAll()
+                    // Allow only requests on the web socket api
+                    .antMatchers("/chat/**").permitAll()
                     // Any request must be authenticated
                     .anyRequest().authenticated().and()
                     // Custom filter for authenticating users using tokens
