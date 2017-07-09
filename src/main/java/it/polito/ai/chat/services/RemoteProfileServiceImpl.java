@@ -6,7 +6,7 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class RemoteProfileServiceImpl implements ProfileService {
 
-    private static final String REMOTE_NICKNAME_ENDPOINT = "http://localhost:8083/profile/nickname?username=";
+    private static final String REMOTE_NICKNAME_ENDPOINT = "https://localhost:8083/profile/nickname?username=";
 
     @Override
     public String getNickname(String username) {

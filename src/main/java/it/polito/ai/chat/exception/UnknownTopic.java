@@ -5,8 +5,9 @@ package it.polito.ai.chat.exception;
  */
 public class UnknownTopic extends RuntimeException {
 
+	private static final long serialVersionUID = 2165317725008727852L;
 
-    /**
+	/**
      * Constructs a new runtime exception with the specified detail message.
      * The cause is not initialized, and may subsequently be initialized by a
      * call to {@link #initCause}.
