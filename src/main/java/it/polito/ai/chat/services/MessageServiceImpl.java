@@ -76,7 +76,7 @@ public class MessageServiceImpl implements MessageService {
 
             case Topics.TRAFFIC:
                 for (int i = 0; i < count; i++) {
-                    trafficMessageRepository.save(new TrafficMessage(new Date(), "mail1@test.com", "Bus&Traffic " + i));
+                    trafficMessageRepository.save(new TrafficMessage(new Date(), "mail1@test.com", "Traffic " + i));
                 }
                 return "Created " + count + " messages about topic: " + Topics.TRAFFIC;
 

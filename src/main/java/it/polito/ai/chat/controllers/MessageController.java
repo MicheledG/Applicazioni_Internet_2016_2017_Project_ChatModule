@@ -23,6 +23,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
  * Created by france193 on 24/06/2017.
  */
 @RestController
+@CrossOrigin(origins = "*")
 public class MessageController {
     @Autowired
     MessageService messageService;
@@ -78,6 +79,8 @@ public class MessageController {
     public String getTopicMessages(@PathVariable("topicName") String topicName,
                                    @RequestParam(value = "count", defaultValue = "10", required = false) Integer count) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
+
+        System.out.println("Someone has requested messages for " + topicName);
 
         PageRequest pageRequest = new PageRequest(0,
                 count,

@@ -67,7 +67,7 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
                         // Extract the JWT token by removing the prefix
                         String token = authorizationHeader.replaceAll(JWTHandler.TOKEN_PREFIX, "");
 
-                        String username;
+                        String username = null;
                         try {
                             username = jwtRemoteService.getRemoteUsername(token);
                         } catch (Exception e) {

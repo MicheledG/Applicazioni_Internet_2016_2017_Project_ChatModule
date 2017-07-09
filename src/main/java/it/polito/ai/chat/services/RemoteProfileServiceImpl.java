@@ -20,7 +20,6 @@ public class RemoteProfileServiceImpl implements ProfileService {
             nickname = restTemplate.getForObject(REMOTE_NICKNAME_ENDPOINT + username, String.class);
         } catch (Exception e) {
             // Something goes wrong with the REST request
-
         }
 
         return nickname;

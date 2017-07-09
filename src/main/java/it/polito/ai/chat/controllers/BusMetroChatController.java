@@ -4,7 +4,6 @@ import it.polito.ai.chat.Topics;
 import it.polito.ai.chat.exception.FailedToAuthenticateException;
 import it.polito.ai.chat.exception.FailedToResolveUsernameException;
 import it.polito.ai.chat.model.messages.ForwardedMessage;
-import it.polito.ai.chat.model.messages.ReceivedMessage;
 import it.polito.ai.chat.model.messages.StoredMessage;
 import it.polito.ai.chat.services.MessageService;
 import it.polito.ai.chat.services.ProfileService;
@@ -29,9 +28,9 @@ public class BusMetroChatController {
     @MessageMapping("/chat_busmetro")
     @SendTo("/topic/BusMetro")
     public ForwardedMessage messageForwarder(SimpMessageHeaderAccessor headerAccessor,
-                                             ReceivedMessage receivedMessage) throws FailedToAuthenticateException, FailedToResolveUsernameException {
+                                             String receivedMessage) throws FailedToAuthenticateException, FailedToResolveUsernameException {
 
-        System.out.println("4 Received: " + Topics.BUS_METRO + " - " + receivedMessage.getContent().toString());
+        System.out.println("Received: " + Topics.BUS_METRO + " - " + receivedMessage);
 
         //create the timestamp of the message
         Date timestamp = new Date();
@@ -48,13 +47,10 @@ public class BusMetroChatController {
             throw new FailedToResolveUsernameException("nickname not resolved for username " + username);
         }
 
-        //extract the information from the received message
-        String messageContent = receivedMessage.getContent();
-
         //create the message to persist
         StoredMessage messageToPersist = new StoredMessage();
         messageToPersist.setUsername(username);
-        messageToPersist.setContent(messageContent);
+        messageToPersist.setContent(receivedMessage);
         messageToPersist.setTimestamp(timestamp);
         messageService.persistMessage(Topics.BUS_METRO, messageToPersist);
 
@@ -62,7 +58,7 @@ public class BusMetroChatController {
         ForwardedMessage messageToForward = new ForwardedMessage();
         messageToForward.setNickname(nickname);
         messageToForward.setTimestamp(timestamp);
-        messageToForward.setContent(messageContent);
+        messageToForward.setContent(receivedMessage);
         messageToForward.setAvatar("hellone!!!");
 
         //forward the message
