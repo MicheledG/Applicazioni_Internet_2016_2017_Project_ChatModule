@@ -3,6 +3,7 @@ package it.polito.ai.chat.services;
 import it.polito.ai.chat.Topics;
 import it.polito.ai.chat.controllers.MessageController;
 import it.polito.ai.chat.exception.CustomNotFoundException;
+import it.polito.ai.chat.exception.FailedToResolveUsernameException;
 import it.polito.ai.chat.exception.UnknownTopic;
 import it.polito.ai.chat.model.messages.*;
 import it.polito.ai.chat.repositories.messages.BikeTripMessageRepository;
@@ -30,6 +31,9 @@ public class MessageServiceImpl implements MessageService {
     private BusMetroMessageRepository busMetroMessageRepository;
     @Autowired
     MessageAssembler messageAssembler;
+    
+    @Autowired
+    private ProfileService profileService;
 
     /**
      * Persist Message on MongoDB
@@ -70,19 +74,19 @@ public class MessageServiceImpl implements MessageService {
         switch (topicName) {
             case Topics.BUS_METRO:
                 for (int i = 0; i < count; i++) {
-                    busMetroMessageRepository.save(new BusMetroMessage(new Date(), "mail1@test.com", "Bus&Metro " + i));
+                    busMetroMessageRepository.save(new BusMetroMessage(new Date(), "thomasvitale93@gmail.com", "Bus&Metro " + i));
                 }
                 return "Created " + count + " messages about topic: " + Topics.BUS_METRO;
 
             case Topics.TRAFFIC:
                 for (int i = 0; i < count; i++) {
-                    trafficMessageRepository.save(new TrafficMessage(new Date(), "mail1@test.com", "Traffic " + i));
+                    trafficMessageRepository.save(new TrafficMessage(new Date(), "thomasvitale93@gmail.com", "Traffic " + i));
                 }
                 return "Created " + count + " messages about topic: " + Topics.TRAFFIC;
 
             case Topics.BIKE_TRIP:
                 for (int i = 0; i < count; i++) {
-                    bikeTripMessageRepository.save(new BikeTripMessage(new Date(), "mail1@test.com", "BikeTrip " + i));
+                    bikeTripMessageRepository.save(new BikeTripMessage(new Date(), "thomasvitale93@gmail.com", "BikeTrip " + i));
                 }
                 return "Created " + count + " messages about topic: " + Topics.BIKE_TRIP;
 
@@ -137,5 +141,16 @@ public class MessageServiceImpl implements MessageService {
         }
 
         return topicMessages;
+    }
+    
+    @Override
+    public String getNickname(String username) {
+    	String nickname = profileService.getNickname(username);
+        if (nickname == null) {
+            System.err.println("nickname not resolved for username " + username);
+            throw new FailedToResolveUsernameException("nickname not resolved for username " + username);
+        }
+        
+        return nickname;
     }
 }

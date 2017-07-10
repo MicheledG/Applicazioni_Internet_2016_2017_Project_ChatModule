@@ -16,4 +16,6 @@ public interface MessageService {
     Object getTopicMessages(String topicName, PageRequest pageRequest);
 
     List<MessageResource> getTopicMessagesforHistory(String topicName, PageRequest pageRequest);
+
+	String getNickname(String username);
 }

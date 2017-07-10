@@ -1,19 +1,19 @@
 package it.polito.ai.chat.controllers;
 
-import it.polito.ai.chat.Topics;
-import it.polito.ai.chat.exception.FailedToAuthenticateException;
-import it.polito.ai.chat.exception.FailedToResolveUsernameException;
-import it.polito.ai.chat.model.messages.ForwardedMessage;
-import it.polito.ai.chat.model.messages.StoredMessage;
-import it.polito.ai.chat.services.MessageService;
-import it.polito.ai.chat.services.ProfileService;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
 
-import java.util.Date;
+import it.polito.ai.chat.Topics;
+import it.polito.ai.chat.exception.FailedToAuthenticateException;
+import it.polito.ai.chat.exception.FailedToResolveUsernameException;
+import it.polito.ai.chat.model.messages.ForwardedMessage;
+import it.polito.ai.chat.model.messages.StoredMessage;
+import it.polito.ai.chat.services.MessageService;
 
 /**
  * Created by france193 on 07/07/2017.
@@ -22,8 +22,6 @@ import java.util.Date;
 public class BusMetroChatController {
     @Autowired
     private MessageService messageService;
-    @Autowired
-    private ProfileService profileService;
 
     @MessageMapping("/chat_busmetro")
     @SendTo("/topic/BusMetro")
@@ -41,11 +39,8 @@ public class BusMetroChatController {
             System.err.println("username in websocket session " + headerAccessor.getSessionId() + " not found");
             throw new FailedToAuthenticateException("username in websocket session " + headerAccessor.getSessionId() + " not found");
         }
-        String nickname = profileService.getNickname(username);
-        if (nickname == null) {
-            System.err.println("nickname not resolved for username " + username);
-            throw new FailedToResolveUsernameException("nickname not resolved for username " + username);
-        }
+        
+        String nickname = messageService.getNickname(username);
 
         //create the message to persist
         StoredMessage messageToPersist = new StoredMessage();

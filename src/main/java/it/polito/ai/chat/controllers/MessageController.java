@@ -4,8 +4,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.polito.ai.chat.Topics;
 import it.polito.ai.chat.exception.CustomNotFoundException;
+import it.polito.ai.chat.exception.FailedToResolveUsernameException;
 import it.polito.ai.chat.exception.UnknownTopic;
+import it.polito.ai.chat.model.messages.ForwardedMessage;
 import it.polito.ai.chat.model.messages.MessageResource;
+import it.polito.ai.chat.model.messages.StoredMessage;
 import it.polito.ai.chat.model.messages.TopicResource;
 import it.polito.ai.chat.services.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,7 +89,23 @@ public class MessageController {
                 count,
                 new Sort(new Sort.Order(Sort.Direction.DESC, "timestamp")));
 
-        return mapper.writeValueAsString(messageService.getTopicMessages(topicName, pageRequest));
+        List<StoredMessage> messages = (List<StoredMessage>) messageService.getTopicMessages(topicName, pageRequest);
+        
+        List<ForwardedMessage> forwardedMessages = new ArrayList<>();
+        for (StoredMessage m : messages) {
+        	
+        	String nickname = messageService.getNickname(m.getUsername());
+        	
+        	ForwardedMessage f = new ForwardedMessage();
+        	f.setNickname(nickname);
+        	f.setContent(m.getContent());
+        	f.setAvatar("hellone");
+        	f.setTimestamp(m.getTimestamp());
+        	
+        	forwardedMessages.add(f);
+        }
+        
+        return mapper.writeValueAsString(forwardedMessages);
     }
 
 
