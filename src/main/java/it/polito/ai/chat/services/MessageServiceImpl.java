@@ -74,19 +74,28 @@ public class MessageServiceImpl implements MessageService {
         switch (topicName) {
             case Topics.BUS_METRO:
                 for (int i = 0; i < count; i++) {
-                    busMetroMessageRepository.save(new BusMetroMessage(new Date(), "thomasvitale93@gmail.com", "Bus&Metro " + i));
+                    busMetroMessageRepository.save(new BusMetroMessage(new Date(), "france193.htc@gmail.com", "Bus&Metro sample message " + i));
+                }
+                for (int i = 0; i < count; i++) {
+                    busMetroMessageRepository.save(new BusMetroMessage(new Date(), "france193.apple@icloud.com", "Bus&Metro sample message " + i));
                 }
                 return "Created " + count + " messages about topic: " + Topics.BUS_METRO;
 
             case Topics.TRAFFIC:
                 for (int i = 0; i < count; i++) {
-                    trafficMessageRepository.save(new TrafficMessage(new Date(), "thomasvitale93@gmail.com", "Traffic " + i));
+                    trafficMessageRepository.save(new TrafficMessage(new Date(), "france193.htc@gmail.com", "Traffic sample message " + i));
+                }
+                for (int i = 0; i < count; i++) {
+                    trafficMessageRepository.save(new TrafficMessage(new Date(), "france193.apple@icloud.com", "Traffic sample message " + i));
                 }
                 return "Created " + count + " messages about topic: " + Topics.TRAFFIC;
 
             case Topics.BIKE_TRIP:
                 for (int i = 0; i < count; i++) {
-                    bikeTripMessageRepository.save(new BikeTripMessage(new Date(), "thomasvitale93@gmail.com", "BikeTrip " + i));
+                    bikeTripMessageRepository.save(new BikeTripMessage(new Date(), "france193.htc@gmail.com", "BikeTrip sample message " + i));
+                }
+                for (int i = 0; i < count; i++) {
+                    bikeTripMessageRepository.save(new BikeTripMessage(new Date(), "france193.apple@icloud.com", "BikeTrip sample message " + i));
                 }
                 return "Created " + count + " messages about topic: " + Topics.BIKE_TRIP;
 

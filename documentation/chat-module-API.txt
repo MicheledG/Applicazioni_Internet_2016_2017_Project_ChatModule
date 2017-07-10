@@ -1,0 +1,46 @@
+/*****************************/
+/         Chat Module         /
+/*****************************/
+
+* MessageService
+    - persistMessage: save message on mongoDB
+
+    - createCountMessages: execute a POST on:
+        https://localhost:8082/topics/BusMetro/messages?count=5
+        or
+        https://localhost:8082/topics/Traffic/messages?count=5
+        or
+        https://localhost:8082/topics/BikeTrip/messages?count=5
+        creating count messages for debug with 2 test user already present on my DB
+
+    - getTopicMessages: execute a GET on
+        https://localhost:8082/topics/BusMetro/messages?count=5
+        or
+        https://localhost:8082/topics/Traffic/messages?count=5
+        or
+        https://localhost:8082/topics/BikeTrip/messages?count=5
+        retrieving count messages for the requested topic (CLIENT ENDPOINT)
+
+    - getTopicMessagesforHistory: execute a GET on
+        https://localhost:8082/topics/BusMetro/messages?count=5
+        or
+        https://localhost:8082/topics/Traffic/messages?count=5
+        or
+        https://localhost:8082/topics/BikeTrip/messages?count=5
+        retrieving count messages for the requested topic (REST services)
+        with additional info (links)
+
+    - getNickname: contact Profile service to get nickname for email (email cannot be changed, nickname can)
+
+* ChatController
+    - BusMetroChatController
+    BusMetro chat topic controller, receive messages on @MessageMapping("/chat_busmetro") and
+    pushes message to the client on @SendTo("/topic/BusMetro")
+
+    - TrafficChatController
+    Traffic chat topic controller, receive messages on @MessageMapping("/chat_traffic") and
+    pushes message to the client on @SendTo("/topic/Traffic")
+
+    - BikeTripChatController
+    BikeTrip chat topic controller, receive messages on @MessageMapping("/chat_biketrip") and
+    pushes message to the client on @SendTo("/topic/BikeTrip")
